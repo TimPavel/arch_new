@@ -14,6 +14,7 @@ use Service\Discount\NullObject;
 use Service\User\ISecurity;
 use Service\User\Security;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Service\Order\OrderBuilder;
 
 class Basket
 {
@@ -91,8 +92,13 @@ class Basket
         $communication = new Email();
 
         $security = new Security($this->session);
-
-        $this->checkoutProcess($discount, $billing, $security, $communication);
+        
+        $orderBuilder = new OrderBuilder();
+        $orderBuilder->setDiscount($discount);
+        $orderBuilder->setBilling($billing);
+        $orderBuilder->setCommunication($communication);
+        $orderBuilder->setSecurity($security);
+        
     }
 
     /**
