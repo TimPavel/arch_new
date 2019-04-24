@@ -8,6 +8,7 @@ use Model\Entity;
 
 class Product
 {
+    
     /**
      * Поиск продуктов по массиву id
      *
@@ -19,10 +20,15 @@ class Product
         if (!count($ids)) {
             return [];
         }
-
+        
+        $product = new Entity\Product(9, 'name', 99);
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
-            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price']);
+            $product = clone $product;
+            $product['id'] = $item['id'];
+            $product['name'] = $item['name'];
+            $product['price'] = $item['price'];
+            $productList[] = $product;
         }
 
         return $productList;
@@ -35,9 +41,14 @@ class Product
      */
     public function fetchAll(): array
     {
+        $product = new Entity\Product(9, 'name', 99);
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
-            $productList[] = new Entity\Product($item['id'], $item['name'], $item['price']);
+            $product = clone $product;
+            $product['id'] = $item['id'];
+            $product['name'] = $item['name'];
+            $product['price'] = $item['price'];
+            $productList[] = $product;
         }
 
         return $productList;

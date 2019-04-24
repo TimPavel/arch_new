@@ -68,4 +68,5 @@ class Product
             'price' => $this->price,
         ];
     }
+
 }
