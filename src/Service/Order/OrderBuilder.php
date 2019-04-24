@@ -3,10 +3,11 @@
 namespace Service\Order;
 
 
-use Service\Billing\Card;
-use Service\Communication\Email;
-use Service\Discount\NullObject;
-use Service\User\Security;
+use Service\Billing\IBilling;
+use Service\Communication\ICommunication;
+use Service\Discount\IDiscount;
+use Service\User\ISecurity;
+use Model\Entity\Product;
 
 class OrderBuilder
 {
@@ -14,49 +15,60 @@ class OrderBuilder
     private $billing;
     private $communication;
     private $security;
+    private $products;
     
-    public function setDiscount(NullObject $discount) : void
+    public function setProducts($products) : OrderBuilder
+    {
+        $this->products = $products;
+    }
+    
+    public function getProducts() : Product
+    {
+        return $this->products;
+    }
+    
+    public function setDiscount(IDiscount $discount) : OrderBuilder
     {
         $this->discount = $discount;
     }
     
-    public function getDiscount(): NullObject
+    public function getDiscount(): IDiscount
     {
         return $this->discount;
     }
     
-    public function setBilling(Card $billing) : void
+    public function setBilling(IBilling $billing) : OrderBuilder
     {
       $this->billing = $billing;
     }
     
-    public function getBilling() : Card
+    public function getBilling() : IBilling
     {
         return $this->billing;
     }
     
-    public function setCommunication(Email $communication) : void
+    public function setCommunication(ICommunication $communication) : OrderBuilder
     {
         $this->communication = $communication;
     }
     
-    public function getCommunication() : Email
+    public function getCommunication() : ICommunication
     {
         return $this->communication;
     }
     
-    public function setSecurity(Security $security) : void
+    public function setSecurity(ISecurity $security) : OrderBuilder
     {
         $this->security = $security;
     }
     
-    public function getSecurity() : Security
+    public function getSecurity() : ISecurity
     {
         return $this->security;
     }
     
-    public function build() : OrderProcess
+    public function build() : Checkout
     {
-        return new OrderProcess($this);
+        return new Checkout($this);
     }
 }

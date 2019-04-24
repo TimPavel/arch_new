@@ -82,52 +82,15 @@ class Basket
      */
     public function checkout(): void
     {
-        // Здесь должна быть некоторая логика выбора способа платежа
-        $billing = new Card();
-
-        // Здесь должна быть некоторая логика получения информации о скидки пользователя
-        $discount = new NullObject();
-
-        // Здесь должна быть некоторая логика получения способа уведомления пользователя о покупке
-        $communication = new Email();
-
-        $security = new Security($this->session);
-        
         $orderBuilder = new OrderBuilder();
-        $orderBuilder->setDiscount($discount);
-        $orderBuilder->setBilling($billing);
-        $orderBuilder->setCommunication($communication);
-        $orderBuilder->setSecurity($security);
+        $orderBuilder->setDiscount(new NullObject());
+        $orderBuilder->setBilling(new Card());
+        $orderBuilder->setCommunication(new Email());
+        $orderBuilder->setSecurity(new Security($this->session));
+        $orderBuilder->setProducts($this->getProductsInfo());
+        $checkout = $orderBuilder->build();
+        $checkout->checkoutProcess();
         
-    }
-
-    /**
-     * Проведение всех этапов заказа
-     *
-     * @param IDiscount $discount,
-     * @param IBilling $billing,
-     * @param ISecurity $security,
-     * @param ICommunication $communication
-     * @return void
-     */
-    public function checkoutProcess(
-        IDiscount $discount,
-        IBilling $billing,
-        ISecurity $security,
-        ICommunication $communication
-    ): void {
-        $totalPrice = 0;
-        foreach ($this->getProductsInfo() as $product) {
-            $totalPrice += $product->getPrice();
-        }
-
-        $discount = $discount->getDiscount();
-        $totalPrice = $totalPrice - $totalPrice / 100 * $discount;
-
-        $billing->pay($totalPrice);
-
-        $user = $security->getUser();
-        $communication->process($user, 'checkout_template');
     }
 
     /**
