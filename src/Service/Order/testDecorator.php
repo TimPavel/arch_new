@@ -8,7 +8,7 @@ function testDecorator(\Service\Order\IOrder $format, $order) {
     echo $format->customizeOrder($order);
 }
 
-$order = new OrderForDecoration;
+$order = new OrderForDecoration();
 $discount = new SetDiscount($order);
 $delivery = new SetDelivery($discount);
 
