@@ -7,7 +7,7 @@ use Model\Entity\OrderForm\Fieldset;
 
 function getProductForm(): FormElement
 {
-    $form = new Form('order', "New order", "/product/add");
+    $form = new Form('order', "New order", "/order/new");
     $form->add(new Input('name', "Name", 'text'));
     
     $inputs= new Fieldset('firstFieldset', "firstFieldset title");
