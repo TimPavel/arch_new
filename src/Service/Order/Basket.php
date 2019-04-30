@@ -90,8 +90,8 @@ class Basket
             $transaction->removeGoodsFromStock();
             $transaction->dispatchOrder();
 
-        } catch (Exception $e) {
-
+        } catch (Exception $e){
+            $transaction->rollbackOrderTransaction();
         }
     }
 

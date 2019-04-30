@@ -29,4 +29,9 @@ class OrderTransactionScript
     public function dispatchOrder() {
         // логика отправки заказа
     }
+
+    public function rollbackOrderTransaction()
+    {
+        // логика отката, в случае неудачной транзакции
+    }
 }
