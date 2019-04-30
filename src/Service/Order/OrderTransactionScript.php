@@ -5,6 +5,7 @@ namespace Service\Order;
 
 class OrderTransactionScript
 {
+
     public function getGoodsFromBasket() {
         // логика получения товаров из корзины
     }

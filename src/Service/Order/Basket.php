@@ -76,6 +76,26 @@ class Basket
     }
 
     /**
+     * Выполняем транзакцию
+     */
+    public function runTransactionScript()
+    {
+        $transaction = new OrderTransactionScript();
+
+        try {
+            $transaction->getGoodsFromBasket();
+            $transaction->getDiscounts();
+            $transaction->calculationOrder();
+            $transaction->getBilling();
+            $transaction->removeGoodsFromStock();
+            $transaction->dispatchOrder();
+
+        } catch (Exception $e) {
+
+        }
+    }
+
+    /**
      * Оформление заказа
      *
      * @return void
