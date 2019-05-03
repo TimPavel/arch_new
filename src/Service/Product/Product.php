@@ -6,7 +6,8 @@ namespace Service\Product;
 
 use Model;
 
-class Product implements
+
+class Product
 {
     /**
      * Получаем информацию по конкретному продукту
