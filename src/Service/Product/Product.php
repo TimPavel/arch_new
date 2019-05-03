@@ -6,7 +6,7 @@ namespace Service\Product;
 
 use Model;
 
-class Product
+class Product implements
 {
     /**
      * Получаем информацию по конкретному продукту
@@ -53,5 +53,12 @@ class Product
     protected function getProductRepository(): Model\Repository\Product
     {
         return new Model\Repository\Product();
+    }
+
+
+    public function testProductMapper($adapter)
+    {
+        $mapper = new Model\Entity\ProductMapper($adapter);
+        $product = $mapper->findById(1);
     }
 }

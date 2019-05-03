@@ -14,7 +14,8 @@ class User
      * @param int $id
      * @return Entity\User|null
      */
-    public function getById(int $id): ?Entity\User
+//    public function getById(int $id): ?Entity\User
+    public function getById(int $id): ?Entity\UserMapper
     {
         foreach ($this->getDataFromSource(['id' => $id]) as $user) {
             return $this->createUser($user);
@@ -27,9 +28,9 @@ class User
      * Получаем пользователя по логину
      *
      * @param string $login
-     * @return Entity\User
+     * @return Entity\UserMapper
      */
-    public function getByLogin(string $login): ?Entity\User
+    public function getByLogin(string $login): ?Entity\UserMapper
     {
         foreach ($this->getDataFromSource(['login' => $login]) as $user) {
             if ($user['login'] === $login) {
