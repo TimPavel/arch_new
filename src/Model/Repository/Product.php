@@ -5,7 +5,7 @@ declare(strict_types = 1);
 namespace Model\Repository;
 
 use Model\Entity;
-use Model\Entity\ProductMapper;
+use Model\Entity\IdentityMap;
 
 class Product
 {
@@ -22,7 +22,8 @@ class Product
             return [];
         }
         
-        $product = new Entity\Product(9, 'name', 99);
+//        $product = new Entity\Product(9, 'name', 99);
+        $product = $this->testIdentityMap('Product', 9);
         $productList = [];
         foreach ($this->getDataFromSource(['id' => $ids]) as $item) {
             $product = clone $product;
@@ -43,6 +44,7 @@ class Product
     public function fetchAll(): array
     {
         $product = new Entity\Product(9, 'name', 99);
+
         $productList = [];
         foreach ($this->getDataFromSource() as $item) {
             $product = clone $product;
@@ -122,4 +124,26 @@ class Product
 
         return array_filter($dataSource, $productFilter);
     }
+
+    /**
+     * функция для теста Identity Map
+     * @param string $domainObjectName
+     * @param int $objectId
+     * @return mixed
+     */
+    public function testIdentityMap(string $domainObjectName, int $objectId)
+    {
+        $identityMap = new IdentityMap();
+
+        try {
+            return $identityMap->get($domainObjectName, $objectId);
+        } catch (EmptyCacheException $e) {
+        }
+
+        $object = $this->dataProvider->getEntityById($domainObjectName, $objectId);
+        $identityMap->add($object);
+
+        return $object;
+    }
+
 }

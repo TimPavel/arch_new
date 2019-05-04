@@ -62,4 +62,5 @@ class Product
         $mapper = new Model\Entity\ProductMapper($adapter);
         $product = $mapper->findById(1);
     }
+
 }
