@@ -55,5 +55,5 @@ class Product
     {
         return new Model\Repository\Product();
     }
-    
+
 }
